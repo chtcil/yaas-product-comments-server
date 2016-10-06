@@ -1,0 +1,7 @@
+---
+applications:
+- name: yaas-comments
+  domain: cfapps.us10.hana.ondemand.com
+  instances: 1
+  memory: 512M
+  path: target/yaas-comments-0.0.1-SNAPSHOT.war
