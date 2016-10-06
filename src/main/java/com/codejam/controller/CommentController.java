@@ -42,7 +42,7 @@ public class CommentController {
 		String token = oauth.getAuthToken("nemanjadev");
 		
 		//Get items from document repo
-		Comment[] objects = documentRepo.getAll(token, tenant, productId);
+		Comment[] objects = documentRepo.getAll(token, tenant, productId, Comment[].class);
 		
 		//Cast to comments
 		List<Comment> comments = new ArrayList<Comment>();
@@ -71,7 +71,7 @@ public class CommentController {
 		//Save in Document Repo
 		String result = documentRepo.post(newComment, tenant, token, productId);
 
-		return new ResponseEntity<String>(result, HttpStatus.CREATED);
+		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
 	// DELETE used to delete comment in product

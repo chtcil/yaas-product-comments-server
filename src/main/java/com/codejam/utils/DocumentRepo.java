@@ -45,11 +45,11 @@ public class DocumentRepo {
 		return new Gson().toJson(o);
 	}
 
-	public Comment[] getAll(String token, String tenant, String productId) {
+	public <T> T getAll(String token, String tenant, String productId, Class<T> type) {
 		try {
 			HttpEntity<String> request = new HttpEntity<>(headerWithToken(token));
 			String url = getUrl(tenant, appId, productId);
-			Comment[] objects = new RestTemplate().exchange(url, HttpMethod.GET, request, Comment[].class).getBody();
+			T objects = new RestTemplate().exchange(url, HttpMethod.GET, request, type).getBody();
 			return objects;
 		} catch (RestClientException e) {
 			e.printStackTrace();
