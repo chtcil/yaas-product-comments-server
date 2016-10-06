@@ -1,0 +1,66 @@
+#%RAML 0.8
+title: yaas-comments
+version: v1
+baseUri: https://api.yaas.io/nemanja/product-comments/v1
+
+/{tenant}/products/{productId}/comments:
+  displayName: Comments
+  get:
+    description: Gets a list of comments for a given product
+    headers: 
+      Authorization: 
+        description: |
+          Used to send a valid OAuth2 access token. 
+        type: string
+        required: true
+        repeat: false
+        example: Bearer access_token
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "author": "TS",
+                  "id": "123456",
+                  "text": "Great product",
+                  "date": "Thu Oct 06 13:20:28 UTC 2016"
+                },
+                {
+                  "author": "nemanja",
+                  "id": "123457",
+                  "text": "Best product ever! 5*!",
+                  "date": "Thu Oct 06 13:35:28 UTC 2016"
+                }
+              ] 
+              
+  post:
+    description: Creates a new comment for a given product
+    headers: 
+      Authorization: 
+        description: |
+          Used to send a valid OAuth2 access token. 
+        type: string
+        required: true
+        repeat: false
+        example: Bearer access_token
+    responses:
+      201:
+        description: Created
+  
+  /{commentId}:
+    delete:
+      headers: 
+        Authorization: 
+          description: |
+            Used to send a valid OAuth2 access token. 
+          type: string
+          required: true
+          repeat: false
+          example: Bearer access_token
+      description: Deleted a comment for a product. Only admin should be able to do this.
+      responses:
+        204:
+        
+    
