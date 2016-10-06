@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,32 @@ public class CommentController {
 		list.add(new Comment(tenantFromHeader, scopesFromHeader));
 
 		return new ResponseEntity<List<Comment>>(list, HttpStatus.OK);
+	}
+
+	// POST create new comment in product
+	@CrossOrigin()
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Comment> post(
+			@RequestHeader(value = "hybris-tenant", defaultValue = "") String tenantFromHeader,
+			@RequestHeader(value = "hybris-scopes", defaultValue = "") String scopesFromHeader,
+			@PathVariable String tenant, @PathVariable String productId, @RequestBody Comment comment) {
+
+		Comment newComment = new Comment(comment.author, comment.text);
+
+		return new ResponseEntity<Comment>(newComment, HttpStatus.CREATED);
+	}
+
+	// DELETE used to delete comment in product
+	@CrossOrigin()
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Comment> delete(
+			@RequestHeader(value = "hybris-tenant", defaultValue = "") String tenantFromHeader,
+			@RequestHeader(value = "hybris-scopes", defaultValue = "") String scopesFromHeader,
+			@PathVariable String tenant, @PathVariable String productId, @PathVariable String id) {
+
+		LOG.info("Comment id: " + id);
+
+		return new ResponseEntity<Comment>(HttpStatus.NO_CONTENT);
 	}
 
 }
